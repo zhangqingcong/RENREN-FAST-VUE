@@ -84,6 +84,7 @@
             _self.dataObj.policy = response.data.policy;
             _self.dataObj.signature = response.data.signature;
             _self.dataObj.ossaccessKeyId = response.data.accessid;
+            //这里用个getUUID防止文件名称重复
             _self.dataObj.key = response.data.dir +getUUID()+'_${filename}';
             _self.dataObj.dir = response.data.dir;
             _self.dataObj.host = response.data.host;
