@@ -24,6 +24,8 @@
       <el-form-item label="显示状态" prop="showStatus">
         <el-switch
           v-model="dataForm.showStatus"
+          :active-value="1"
+          :inactive-value="0"
           active-color="#13ce66"
           inactive-color="#ff4949"
         >
