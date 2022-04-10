@@ -257,6 +257,8 @@ export default {
         });
       });
     },
+    
+    //更新品牌状态
     updateBrandStatus(data) {
       console.log("最新状态", data);
       let { brandId, showStatus } = data;
