@@ -1,4 +1,3 @@
-<!--  -->
 <template>
   <!-- 总共是24 左右结构的 左边占6放菜单，右边占18放表格 -->
   <el-row :gutter="20">
@@ -23,6 +22,9 @@
           </el-form-item>
           <el-form-item>
             <el-button @click="getDataList()">查询</el-button>
+            <el-button type="success" @click="getAllDataList()">
+              查询全部
+            </el-button>
             <el-button
               v-if="isAuth('product:attrgroup:save')"
               type="primary"
@@ -105,6 +107,12 @@
               <el-button
                 type="text"
                 size="small"
+                @click="relationHandle(scope.row.attrGroupId)"
+                >关联</el-button
+              >
+              <el-button
+                type="text"
+                size="small"
                 @click="addOrUpdateHandle(scope.row.attrGroupId)"
                 >修改</el-button
               >
@@ -125,14 +133,19 @@
           :page-size="pageSize"
           :total="totalPage"
           layout="total, sizes, prev, pager, next, jumper"
-        >
-        </el-pagination>
+        ></el-pagination>
         <!-- 弹窗, 新增 / 修改 -->
         <add-or-update
           v-if="addOrUpdateVisible"
           ref="addOrUpdate"
           @refreshDataList="getDataList"
         ></add-or-update>
+        <!-- 修改关联关系 -->
+        <relation-update
+          v-if="relationVisible"
+          ref="relationUpdate"
+          @refreshData="getDataList"
+        ></relation-update>
       </div>
     </el-col>
   </el-row>
@@ -146,13 +159,19 @@
  */
 //这里可以导入其他文件（比如：组件，工具js，第三方插件js，json文件，图片文件等等）
 //例如：import 《组件名称》 from '《组件路径》';
-import Category from "../common/category.vue";
+import Category from "../common/category";
 import AddOrUpdate from "./attrgroup-add-or-update";
+import RelationUpdate from "./attr-group-relation";
 export default {
   //import引入的组件需要注入到对象中才能使用
   //第一个Category是给注册的组件起的名是自定义的 第二个Category是导入的组件名
   // components: { Category},若我们自定义的组件名和导入的组件名一致 还可以只写自定义的组件名
-  components: { Category: Category, AddOrUpdate: AddOrUpdate },
+  components: {
+    Category: Category,
+    AddOrUpdate: AddOrUpdate,
+    RelationUpdate: RelationUpdate,
+  },
+  props: {},
   data() {
     //这里存放数据
     return {
@@ -167,12 +186,20 @@ export default {
       dataListLoading: false,
       dataListSelections: [],
       addOrUpdateVisible: false,
+      relationVisible: false,
     };
   },
   activated() {
     this.getDataList();
   },
   methods: {
+    //处理分组与属性的关联
+    relationHandle(groupId) {
+      this.relationVisible = true;
+      this.$nextTick(() => {
+        this.$refs.relationUpdate.init(groupId);
+      });
+    },
     //感知树节点被点击了
     treeNodeClick(data, node, component) {
       console.log(
@@ -182,12 +209,17 @@ export default {
         component
       );
       console.log("刚才被点击的菜单ID：", data.catId);
-      if(node.level == 3){
-       this.catId = data.catId;
-       //重新查询
-       this.getDataList();
+      if (node.level == 3) {
+        this.catId = data.catId;
+        //重新查询
+        this.getDataList();
       }
     },
+    getAllDataList() {
+      this.catId = 0;
+      this.getDataList();
+    },
+
     // 获取数据列表
     getDataList() {
       this.dataListLoading = true;
