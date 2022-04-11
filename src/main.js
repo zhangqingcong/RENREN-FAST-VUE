@@ -20,7 +20,14 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 // 挂载全局
-Vue.prototype.$http = httpRequest // ajax请求方法
+// Vue.prototype.$http $http是自定义的 在Vue中 可以把每个组建看成是一个new Vue()实例
+// 之所以叫$http大概是参考了jQuery的命名方式
+// httpRequest是axios的封装 axios是Ajax的封装 在每个Vue实例中都有可能发起http的get post请求
+// 需要在每个组件中import axios/Ajax 那样比较麻烦 我们直接把封装的axios httpRequest挂载到全局上
+// 每个Vue实例都可以通过this.$http的方式向服务端发起请求 而且还可以在httpRequest中封装常用的对请求参数
+// 返回参数的处理 拦截 比如给get请求添加t参数时间戳
+// Vue.prototype.$http = httpRequest // ajax请求方法
+Vue.prototype.$http = httpRequest
 Vue.prototype.isAuth = isAuth     // 权限方法
 
 // 保存整站vuex本地储存初始状态
