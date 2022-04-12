@@ -27,6 +27,7 @@ if (process.env.NODE_ENV !== 'production') {
 // 每个Vue实例都可以通过this.$http的方式向服务端发起请求 而且还可以在httpRequest中封装常用的对请求参数
 // 返回参数的处理 拦截 比如给get请求添加t参数时间戳
 // Vue.prototype.$http = httpRequest // ajax请求方法
+// 但是 把axios挂载到Vue原型上，又一个缺点就是不利于API接口的复用
 Vue.prototype.$http = httpRequest
 Vue.prototype.isAuth = isAuth     // 权限方法
 
