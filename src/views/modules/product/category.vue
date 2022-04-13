@@ -81,6 +81,7 @@
 //例如：import 《组件名称》 from '《组件路径》';
 
 export default {
+  name:'Category',
   //import引入的组件需要注入到对象中才能使用
   components: {},
   data() {
@@ -197,6 +198,7 @@ export default {
         this.category.parentCid = data.data.parentCid;
       });
     },
+    // 新增对话框
     append(data) {
       console.log("append", data);
       //点击新增的时候打开的对话框

@@ -18,8 +18,7 @@
           v-if="isAuth('product:brand:save')"
           type="primary"
           @click="addOrUpdateHandle()"
-          >新增</el-button
-        >
+          >新增</el-button>
         <el-button
           v-if="isAuth('product:brand:delete')"
           type="danger"
@@ -156,7 +155,6 @@
       ref="addOrUpdate"
       @refreshDataList="getDataList"
     ></add-or-update>
-
     <el-dialog
       title="关联分类"
       :visible.sync="cateRelationDialogVisible"
@@ -208,9 +206,12 @@
 </template>
 
 <script>
+// script节点是组建可选的，用来封装组件的JavaScript逻辑
 import AddOrUpdate from "./brand-add-or-update";
 import CategoryCascader from "../common/category-cascader";
 export default {
+  // 给组件起名 方便调试
+  name: "Brand",
   data() {
     return {
       dataForm: {
@@ -230,7 +231,7 @@ export default {
       popCatelogSelectVisible: false,
     };
   },
-  //把导入的组件注册在这里
+  //把导入的组件注册在这里 局部注册
   components: {
     AddOrUpdate,
     CategoryCascader,
@@ -384,3 +385,6 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+</style>

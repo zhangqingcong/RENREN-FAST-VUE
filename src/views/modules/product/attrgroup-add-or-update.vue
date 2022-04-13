@@ -47,6 +47,7 @@
 
 <script>
 export default {
+  name: 'AttrGroupAddOrUpdate',
   data() {
     return {
       props:{

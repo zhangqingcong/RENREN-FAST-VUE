@@ -23,6 +23,7 @@
 //这里可以导入其他文件（比如：组件，工具js，第三方插件js，json文件，图片文件等等）
 //例如：import 《组件名称》 from '《组件路径》';
 export default {
+  name:'CategoryCascader',
   //component引入的参数要在这里进行注册才能使用
   component: {},
   //props是组件之间进行通信的用来接受父组件传来的值

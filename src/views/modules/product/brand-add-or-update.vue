@@ -51,6 +51,7 @@
 <script>
 import SingleUpload from "@/components/upload/singleUpload";
 export default {
+  name: 'BrandAndOrUpdate',
   components: { SingleUpload },
   data() {
     return {

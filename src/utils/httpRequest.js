@@ -4,7 +4,7 @@ import router from '@/router'
 import qs from 'qs'
 import merge from 'lodash/merge'
 import { clearLoginInfo } from '@/utils'
-
+// 创建实例的时候，配置默认设置
 const http = axios.create({
   timeout: 1000 * 30,
   withCredentials: true,

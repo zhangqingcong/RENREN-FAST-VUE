@@ -1,5 +1,5 @@
 <template>
-  <!-- 总共是24 左右结构的 左边占6放菜单，右边占18放表格-->
+  <!-- 总共是24 栅格 左右结构的 左边占6放菜单，右边占18放表格-->
   <el-row :gutter="20">
     <el-col :span="6">
       <!-- 子组件向父组件发送名为tree-node-clck 的事件 父组件接受这个事件 -->
@@ -163,6 +163,7 @@ import Category from "../common/category";
 import AddOrUpdate from "./attrgroup-add-or-update";
 import RelationUpdate from "./attr-group-relation";
 export default {
+  name:'AttrGroup',
   //import引入的组件需要注入到对象中才能使用
   //第一个Category是给注册的组件起的名是自定义的 第二个Category是导入的组件名
   // components: { Category},若我们自定义的组件名和导入的组件名一致 还可以只写自定义的组件名
