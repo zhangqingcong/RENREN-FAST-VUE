@@ -36,6 +36,8 @@
         >
         </el-switch>
       </el-form-item>
+      <!-- 为el-select设置multiple属性即可启用多选，此时v-model的值为当前选中值所组成的数组。
+      默认情况下选中值会以 Tag 的形式展现，你也可以设置collapse-tags属性将它们合并为一段文字。 -->
       <el-form-item label="可选值" prop="valueSelect">
         <el-select
           v-model="dataForm.valueSelect"
@@ -121,12 +123,13 @@ export default {
         searchType: 0,
         valueType: 1,
         icon: "",
-        valueSelect: "",
+        valueSelect: " ",
         attrType: 1,
         enable: 1,
-        catelogId: "",
+        catelogId: 0, //品牌分类ID 该属性是哪个品牌分组的
         showDesc: 0,
-        attrGroupId: "",
+        // 分组属性ID Long类型 attr是哪个分组的
+        attrGroupId: 0,
       },
       catelogPath: [],
       attrGroups: [],
@@ -188,7 +191,7 @@ export default {
       console.log("路径变了", path);
       this.attrGroups = [];
       this.dataForm.attrGroupId = "";
-      this.dataForm.catelogId = [path.length - 1];
+      this.dataForm.catelogId = path[path.length - 1];
       if (path && path.length == 3) {
         this.$http({
           url: this.$http.adornUrl(
@@ -252,7 +255,7 @@ export default {
         if (valid) {
           this.$http({
             url: this.$http.adornUrl(
-              `/product/attr/${!this.dataForm.attrId} ? "save" : "update"`
+              `/product/attr/${!this.dataForm.attrId ? "save" : "update"}`
             ),
             method: "post",
             data: this.$http.adornData({
