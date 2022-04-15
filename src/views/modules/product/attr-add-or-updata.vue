@@ -27,14 +27,13 @@
       <el-form-item label="值类型" prop="valueType">
         <el-switch
           v-model="dataForm.valueType"
-          active-color="#13ce66"
-          inactive-color="#ff4949"
           active-text="允许多个值"
           inactive-text="只能单个值"
+          active-color="#13ce66"
+          inactive-color="#ff4949"
           :inactive-value="0"
           :active-value="1"
-        >
-        </el-switch>
+        ></el-switch>
       </el-form-item>
       <!-- 为el-select设置multiple属性即可启用多选，此时v-model的值为当前选中值所组成的数组。
       默认情况下选中值会以 Tag 的形式展现，你也可以设置collapse-tags属性将它们合并为一段文字。 -->
@@ -42,8 +41,8 @@
         <el-select
           v-model="dataForm.valueSelect"
           multiple
-          allow-create
           filterable
+          allow-create
           placeholder="请输入内容"
         ></el-select>
       </el-form-item>
@@ -123,13 +122,13 @@ export default {
         searchType: 0,
         valueType: 1,
         icon: "",
-        valueSelect: " ",
+        valueSelect: "",
         attrType: 1,
         enable: 1,
-        catelogId: 0, //品牌分类ID 该属性是哪个品牌分组的
-        showDesc: 0,
+        catelogId: "", //品牌分类ID 该属性是哪个品牌分组的
         // 分组属性ID Long类型 attr是哪个分组的
-        attrGroupId: 0,
+        attrGroupId: "",
+        showDesc: 0,
       },
       catelogPath: [],
       attrGroups: [],
@@ -234,10 +233,10 @@ export default {
               this.dataForm.searchType = data.attr.searchType;
               this.dataForm.valueType = data.attr.valueType;
               this.dataForm.icon = data.attr.icon;
-              this.dataForm.valueSelect = data.attr.valueSelect;
+              this.dataForm.valueSelect = data.attr.valueSelect.split(";");
               this.dataForm.attrType = data.attr.attrType;
               this.dataForm.enable = data.attr.enable;
-              this.datForm.catelogId = data.attr.catelogId;
+              this.dataForm.catelogId = data.attr.catelogId;
               this.dataForm.showDesc = data.attr.showDesc;
               //catelogPath attrGroupId
               this.catelogPath = data.attr.catelogPath;
@@ -264,7 +263,7 @@ export default {
               searchType: this.dataForm.searchType,
               valueType: this.dataForm.valueType,
               icon: this.dataForm.icon,
-              valueSelect: this.dataForm.valueSelect,
+              valueSelect: this.dataForm.valueSelect.join(";"),
               attrType: this.dataForm.attrType,
               enable: this.dataForm.enable,
               catelogId: this.dataForm.catelogId,
