@@ -114,7 +114,8 @@
                   /></span>
                 </div>
                 <el-tag>{{
-                  scope.row.valueSelect.split(",")[0] + " ..."
+
+                  scope.row.valueSelect || "".split(',')[0] + " ..."
                 }}</el-tag>
               </el-tooltip>
             </template>
