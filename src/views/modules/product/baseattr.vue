@@ -108,13 +108,13 @@
               <el-tooltip placement="top">
                 <div slot="content">
                   <span
-                    v-for="(i, index) in scope.row.valueSelect.split(';')"
+                    v-for="(i, index) in scope.row.valueSelect.split(',')"
                     :key="index"
                     >{{ i }}<br
                   /></span>
                 </div>
                 <el-tag>{{
-                  scope.row.valueSelect.split(";")[0] + " ..."
+                  scope.row.valueSelect.split(",")[0] + " ..."
                 }}</el-tag>
               </el-tooltip>
             </template>
