@@ -3,6 +3,7 @@
  *
  * 建议:
  * 1. 代码中路由统一使用name属性跳转(不使用path属性)
+ * 2.一个js文件就是一个模块
  */
 import Vue from 'vue'
 import Router from 'vue-router'

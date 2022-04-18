@@ -1,4 +1,3 @@
-<!--  -->
 <template>
   <!-- gutter是栅格间隔 -->
   <el-row :gutter="20">
@@ -144,7 +143,6 @@
             label="所属分组"
           ></el-table-column>
           <el-table-column
-            v-if="attrtype == 1"
             prop="showDesc"
             header-align="center"
             align="center"
