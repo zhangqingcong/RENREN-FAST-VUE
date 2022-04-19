@@ -75,7 +75,7 @@
         </div>
         <div slot="footer" class="dialog-footer">
           <el-button @click="innerVisible = false">取 消</el-button>
-          <el-button type="primary" @click="submitAddRealtion"
+          <el-button type="primary" @click="submitAddRelation"
             >确认新增</el-button
           >
         </div>
@@ -193,14 +193,81 @@ export default {
           this.relationAttrs = data.data;
         });
     },
+    // 新增关联分类
+    submitAddRelation() {
+      this.innerVisible = false;
+      // 准备新增的数据
+      console.log("准备新增的数据", this.innerdataListSelections);
+      if (this.innerdataListSelections.length > 0) {
+        let postData = [];
+        this.innerdataListSelections.forEach((item) => {
+          postData.push({ attrId: item.attrId, attrGroupId: this.attrGroupId });
+        });
+        this.$http({
+          url: this.$http.adornUrl("/product/attrgroup/attr/relation"),
+          method: "post",
+          data: this.$http.adornData(postData, false),
+        }).then(({ data }) => {
+          if (data.code == 0) {
+            this.$message({ type: "success", message: "新增关联" });
+          }
+          this.$emit("refreshData");
+          this.init(this.attrGroupId);
+        });
+      } else {
+      }
+    },
 
+    dialogClose() {},
     /**新增属性分组与属性的关联 */
     addRelation() {
       this.getDataList();
       this.innerVisible = true;
     },
-    getDataList() {},
 
+    //批量删除
+    batchDeleteRelation(val) {
+      let postData = [];
+      this.dataListSelections.forEach((item) => {
+        postData.push({ attrId: item.attrId, attrGroupId: this.attrGroupId });
+      });
+      this.$http({
+        url: this.$http.adornUrl("/product/attrgroup/attr/relation/delete"),
+        method: "post",
+        data: this.$http.adornData(postData, false),
+      }).then(({ data }) => {
+        if (daat.code == 0) {
+          this.$message({ type: "success", message: "删除成功" });
+          this.init(this.attrGroupId);
+        } else {
+          this.$message({ type: "error", message: data.msg });
+        }
+      });
+    },
+    // 获取该分组下还没有关联的信息
+    getDataList() {
+      this.dataListLoading = true;
+      this.$http({
+        url: this.$http.adornUrl(
+          "/product/attrgroup/" + this.attrGroupId + "/noattr/relation"
+        ),
+        method: "get",
+        params: this.$http.adornParams({
+          page: this.pageIndex,
+          limit: this.pageSize,
+          key: this.dataForm.key,
+        }),
+      }).then(({ data }) => {
+        if (data && data.page.list === 0) {
+          this.dataList = data.page.list;
+          this.totalPage = data.page.totalCount;
+        } else {
+          this.dataList = [];
+          this.totalPage = 0;
+        }
+        this.dataListLoading = false;
+      });
+    },
     // 删除属性和属性分组之间的关系
     relationRemove(attrId) {
       let data = [];
@@ -209,14 +276,33 @@ export default {
         url: this.$http.adornUrl("/product/attrgroup/attr/relation/delete"),
         method: "post",
         data: this.$http.adornData(data, false),
-      }).then(({data})=>{
-        if(data.code == 0){
-          this.$message({type: "success",message:"删除成功"});
+      }).then(({ data }) => {
+        if (data.code == 0) {
+          this.$message({ type: "success", message: "删除成功" });
           this.init(this.attrGroupId);
-        }else{
-          this.$message({type:"error",message: data.msg});
+        } else {
+          this.$message({ type: "error", message: data.msg });
         }
       });
+    },
+    // 每页数
+    sizeChangeHandle(val) {
+      this.pageSize = val;
+      this.pageIndex = 1;
+      this.getDataList();
+    },
+
+    // 当前页
+    currentChangeHandle(val) {
+      this.pageIndex = val;
+      this.getDataList();
+    },
+
+    selectionChangeHandle(val) {
+      this.dataListSelections = val;
+    },
+    innerSelectionChangeHandle(val) {
+      this.innerdataListSelections = val;
     },
   },
   //生命周期 - 创建完成（可以访问当前this实例）

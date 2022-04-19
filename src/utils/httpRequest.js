@@ -49,6 +49,7 @@ http.adornUrl = (actionName) => {
  * get请求参数处理
  * @param {*} params 参数对象
  * @param {*} openDefultParams 是否开启默认参数?
+ * new Date() 每次请求加一下当前的时间戳，可以解决缓存问题 学习Ajax时学得
  */
 http.adornParams = (params = {}, openDefultParams = true) => {
   var defaults = {
