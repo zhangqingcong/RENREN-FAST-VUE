@@ -200,6 +200,24 @@ export default {
       this.innerVisible = true;
     },
     getDataList() {},
+
+    // 删除属性和属性分组之间的关系
+    relationRemove(attrId) {
+      let data = [];
+      data.push({ attrId, attrGroupId: this.attrGroupId });
+      this.$http({
+        url: this.$http.adornUrl("/product/attrgroup/attr/relation/delete"),
+        method: "post",
+        data: this.$http.adornData(data, false),
+      }).then(({data})=>{
+        if(data.code == 0){
+          this.$message({type: "success",message:"删除成功"});
+          this.init(this.attrGroupId);
+        }else{
+          this.$message({type:"error",message: data.msg});
+        }
+      });
+    },
   },
   //生命周期 - 创建完成（可以访问当前this实例）
   created() {},
