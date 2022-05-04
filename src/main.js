@@ -10,6 +10,7 @@ import '@/assets/scss/index.scss'
 import httpRequest from '@/utils/httpRequest' // api: https://github.com/axios/axios
 import { isAuth } from '@/utils'
 import cloneDeep from 'lodash/cloneDeep'
+import PubSub from 'pubsub-js'
 
 Vue.use(VueCookie)
 Vue.config.productionTip = false
@@ -20,7 +21,7 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 // 挂载全局
-// Vue.prototype.$http $http是自定义的 在Vue中 可以把每个组建看成是一个new Vue()实例
+// Vue.prototype.$http  $http 是自定义的 在Vue中 可以把每个组建看成是一个new Vue()实例
 // 之所以叫$http大概是参考了jQuery的命名方式
 // httpRequest是axios的封装 axios是Ajax的封装 在每个Vue实例中都有可能发起http的get post请求
 // 需要在每个组件中import axios/Ajax 那样比较麻烦 我们直接把封装的axios httpRequest挂载到全局上
@@ -30,6 +31,7 @@ if (process.env.NODE_ENV !== 'production') {
 // 但是 把axios挂载到Vue原型上，又一个缺点就是不利于API接口的复用
 Vue.prototype.$http = httpRequest
 Vue.prototype.isAuth = isAuth     // 权限方法
+Vue.prototype.PubSub = PubSub
 
 // 保存整站vuex本地储存初始状态
 window.SITE_CONFIG['storeState'] = cloneDeep(store.state)

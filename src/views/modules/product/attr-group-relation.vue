@@ -1,4 +1,4 @@
-<!--  属性和组关系的组件-->
+<!--  属性和分组关系的组件-->
 <template>
   <div>
     <el-dialog
@@ -154,6 +154,7 @@ export default {
   name: "AttrGroupRelation",
   //import引入的组件需要注入到对象中才能使用
   components: {},
+  props: {},
   data() {
     //这里存放数据
     return {
@@ -244,7 +245,7 @@ export default {
         }
       });
     },
-    // 获取该分组下还没有关联的信息
+    // 获取该分组下还没有关联的属性
     getDataList() {
       this.dataListLoading = true;
       this.$http({
@@ -258,7 +259,7 @@ export default {
           key: this.dataForm.key,
         }),
       }).then(({ data }) => {
-        if (data && data.page.list === 0) {
+        if (data && data.code === 0) {
           this.dataList = data.page.list;
           this.totalPage = data.page.totalCount;
         } else {

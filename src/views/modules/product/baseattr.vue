@@ -113,7 +113,7 @@
                   /></span>
                 </div>
                 <el-tag>{{
-                  scope.row.valueSelect.split(';')[0] + " ..."
+                  scope.row.valueSelect.split(";")[0] + " ..."
                 }}</el-tag>
               </el-tooltip>
             </template>
@@ -260,7 +260,9 @@ export default {
           limit: this.pageSize,
           key: this.dataForm.key,
         }),
-      }).then(({ data }) => {
+      }).then((value) => {
+        console.log(value);
+        let data = value.data;
         if (data && data.code === 0) {
           this.dataList = data.page.list;
           this.totalPage = data.page.totalCount;
