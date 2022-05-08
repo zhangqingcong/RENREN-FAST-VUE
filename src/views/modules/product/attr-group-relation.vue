@@ -212,6 +212,7 @@ export default {
           if (data.code == 0) {
             this.$message({ type: "success", message: "新增关联" });
           }
+          //自定义事件 子组件向父组件传值 第一个参数是自定义的参数名
           this.$emit("refreshData");
           this.init(this.attrGroupId);
         });

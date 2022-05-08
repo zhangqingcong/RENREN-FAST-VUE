@@ -140,7 +140,8 @@
           ref="addOrUpdate"
           @refreshDataList="getDataList"
         ></add-or-update>
-        <!-- 修改关联关系 -->
+        <!-- 修改关联关系 ref 把这个relation-update组件的引用 ref还可以获得dom的引用-->
+        <!-- @=v-on 父组件绑定子组件的自定义事件 给这个自定义事件绑定一个处理函数 -->
         <relation-update
           v-if="relationVisible"
           ref="relationUpdate"
@@ -197,7 +198,9 @@ export default {
     //获取属性分组与属性的关联
     relationHandle(groupId) {
       this.relationVisible = true;
+      //$nextTick(callback); 下次dom更新时执行回调函数
       this.$nextTick(() => {
+        //调用relationUpdate饮用的init函数方法
         this.$refs.relationUpdate.init(groupId);
       });
     },
